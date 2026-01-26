@@ -148,7 +148,7 @@ correct_text <- function(input_text, corrections) {
     stop("Package 'stringi' must be installed to use this function.", call. = FALSE)
   }
   if(nrow(corrections) > 0){
-    text_to_clean <- stringi::stri_replace_all_regex(input_text, corrections$typoEdit, corrections$replacement, vectorize_all = FALSE)
+    text_to_clean <- stringi::stri_replace_all_regex(tolower(input_text), corrections$typoEdit, corrections$replacement, vectorize_all = FALSE)
   } else {
     text_to_clean = input_text
   }
@@ -210,7 +210,8 @@ clean_text <- function(input_text, corrections) {
   text_to_clean <- stringr::str_replace_all(text_to_clean, "_", "\\.")
 
   # Final typo correction with external correction function
-  return(correct_text(text_to_clean, corrections))
+  corrected_text = correct_text(text_to_clean, corrections)
+  return(corrected_text)
 }
 
 # ===================================

@@ -138,7 +138,7 @@ create_output <- function(sentence_complete_output, sentences_lda, settings) {
   avg_nr_sentences <- assigned_sentences / settings$nr_topics
 
   for (t in 1:settings$nr_topics) {
-    if (all_topics[[t]]$feedback_count <= 5) {
+    if (all_topics[[t]]$feedback_count <= settings$min_feedback_count) {
       all_topics[[t]]$quality_cat <- ''
       all_topics[[t]]$quantity_cat <- 1
       if (all_topics[[t]]$feedback_count == 0) {
@@ -153,9 +153,9 @@ create_output <- function(sentence_complete_output, sentences_lda, settings) {
         all_topics[[t]]$quantity_cat <- 4
       }
 
-      if (all_topics[[t]]$strength >= 0.1) {
+      if (all_topics[[t]]$strength >= settings$min_strength_polarity) {
         all_topics[[t]]$quality_cat <- 'positive'
-      } else if (all_topics[[t]]$strength < 0) {
+      } else if (all_topics[[t]]$strength < settings$max_improvement_polarity) {
         all_topics[[t]]$quality_cat <- 'negative'
       }
     }
@@ -178,10 +178,18 @@ create_output <- function(sentence_complete_output, sentences_lda, settings) {
                                                      "polarity", "score", "competencyid", "competency", "comment", "submissionid", "zorgpunt")]
     additional_sentences <- dplyr::distinct_at(additional_sentences, dplyr::vars(-.data$sentenceid))
 
+    name_other = "Overige feedback"
+    explain_other = "Feedback die niet gekoppeld is aan de vastgestelde onderwerpen"
+
+    if(settings$language != "nl"){
+      name_other = "Other feedback"
+      explain_other = "Feedback that was not assigned to the predetermined topics"
+    }
+
     topic_list <- list(
-      "topic_domain" = "Overige feedback",
-      "topic_name" = "Overige feedback",
-      "topic_description" = "Feedback die niet gekoppeld is aan de vastgestelde onderwerpen",
+      "topic_domain" = name_other,
+      "topic_name" = name_other,
+      "topic_description" = explain_other,
       "topic_seeds" = "",
       "feedback_count" = "",
       "quantity_cat" = "",

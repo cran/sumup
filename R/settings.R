@@ -100,6 +100,13 @@ set_default_settings <- function(){
 
     # Threshold of minimal relevance for assigning feedback to topic (between 0 and 1)
     assignment_threshold = 0.4,
+    # Minimum number of feedback sentences per topic to determine the quality of the feedback
+    min_feedback_count = 5,
+    # Minimum average weighted polarity of a topic to be defined as 'strength' (average polarity >= min_strength_polarity)
+    min_strength_polarity = 0.1,
+    # Maximum average weighted polarity of a topic to be defined as 'improvement area' (average polarity < max_improvement_polarity)
+    max_improvement_polarity = 0,
+
     # The number of topics as output from topic modeling without using seeds
     nr_topics = 5L,
     # The number of top terms per topic as output from topic modeling without using seeds
@@ -268,6 +275,9 @@ check_setting <- function(settings, setting_name, setting_value) {
 
     set_seed = "numeric",
     assignment_threshold = "numeric",
+    min_feedback_count = "numeric",
+    min_strength_polarity = "numeric",
+    max_improvement_polarity = "numeric",
     nr_topics = "integer",
     nr_top_terms = "integer",
     topic_names = "list",
@@ -318,6 +328,31 @@ check_setting <- function(settings, setting_name, setting_value) {
 
   if (setting_name == "assignment_threshold" && (setting_value < 0 || setting_value > 1)) {
     warning("Value for 'assignment_threshold' must be between 0 and 1.")
+    return(FALSE)
+  }
+
+  if (setting_name == "min_feedback_count" && (setting_value < 0)) {
+    warning("Value for 'min_feedback_count' must be positive.")
+    return(FALSE)
+  }
+
+  if (setting_name == "min_strength_polarity" && (setting_value < -1 || setting_value > 1)) {
+    warning("Value for 'min_strength_polarity' must be between -1 and 1.")
+    return(FALSE)
+  }
+
+  if (setting_name == "max_improvement_polarity" && (setting_value < -1 || setting_value > 1)) {
+    warning("Value for 'max_improvement_polarity' must be between -1 and 1.")
+    return(FALSE)
+  }
+
+  if (setting_name == "scale_min" && setting_value > settings$scale_max) {
+    warning("Value for 'scale_min' must be smaller than 'scale_max'.")
+    return(FALSE)
+  }
+
+  if (setting_name == "score_min" && setting_value > settings$score_max) {
+    warning("Value for 'score_min' must be smaller than 'score_max'.")
     return(FALSE)
   }
 
