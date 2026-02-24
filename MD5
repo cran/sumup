@@ -1,4 +1,4 @@
-c178e7d3d042520a79761d2057024f47 *DESCRIPTION
+a5bb8c8e6ddae438706f5a66999ceb89 *DESCRIPTION
 e62637ea8a114355b985fd86c9ffbd6e *LICENSE
 4c28d5bb331d0a799d5466177b175ca2 *NAMESPACE
 47278e0b4e51e4af213ef1869430de73 *R/check_dataset.R
@@ -12,8 +12,9 @@ c185293da30e6badb1cd1e94ec0c7244 *R/sentiment_analysis_grasp.R
 3a1be2d319b2ca2c588856396293e1f2 *R/settings.R
 c9cd8f2e16404bd8ed9c035ede77b284 *R/stopwords.R
 a5a8dda41934e3085b9c5e73f067c358 *R/sumup-package.R
-7deba63b8aa93c241b4645b2dad45079 *R/text_clean.R
-02f427458c6c8ab4952af1be187d939e *R/tidy_text.R
+381334d27c6fee6d523994dbecf8b5e9 *R/text_clean.R
+e0cf70bb4b5ceb64ad807b5d8fec8826 *R/text_utils_internal.R
+78ba52e05c9f9306112ffdfc26ddcb51 *R/tidy_text.R
 dac26a40923cb45166160fa886736019 *R/topic_classification.R
 ffb24110414f85fc31e9df6c867b6299 *R/topic_modeling.R
 cf794928715019cf81bd51d467156178 *R/utils-pipe.R

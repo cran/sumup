@@ -186,12 +186,13 @@ clean_text <- function(input_text, corrections) {
     input_text <- stringr::str_replace_all(input_text, pattern, replacement)
   }
 
-  # Apply textclean's replace_html and replace_white only once
-  text_to_clean <- textclean::replace_html(input_text, FALSE)
-  text_to_clean <- textclean::replace_white(text_to_clean)
+  # Apply replace_html and replace_white only once
+  text_to_clean <- replace_html_internal(input_text, FALSE)
+  text_to_clean <- replace_white_internal(text_to_clean)
 
   # Replace tokens ('/' and '-') in a single step
-  text_to_clean <- textclean::replace_tokens(text_to_clean, c('/', '-'))
+  text_to_clean <- replace_tokens_internal(text_to_clean, c('/', '-'))
+  text_to_clean <- replace_white_internal(text_to_clean)
 
   # Replace double periods followed by space and uppercase letter
   text_to_clean <- gsub("\\.{2,}(\\s+[A-Z])", ".\\1", text_to_clean)
@@ -203,7 +204,7 @@ clean_text <- function(input_text, corrections) {
   text_to_clean <- stringr::str_squish(text_to_clean)
 
   # Add missing endmark and remove standalone periods
-  text_to_clean <- textclean::add_missing_endmark(text_to_clean, replacement = ".")
+  text_to_clean <- add_missing_endmark_internal(text_to_clean, replacement = ".")
   text_to_clean <- gsub("^\\.$", "", text_to_clean)
 
   # Replace the remaining underscore with a period

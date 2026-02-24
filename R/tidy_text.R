@@ -65,7 +65,7 @@ tidy_text <- function(narratives, split_in_sentences = TRUE) {
   # Add 'sentenceid' column and clean sentence text
   sentences_all <- data.table::data.table(sentences_all)
   sentences_all$sentenceid <- 1:nrow(sentences_all)
-  sentences_all$sentence <- stringr::str_squish(textclean::replace_html(sentences_all$sentence, FALSE))
+  sentences_all$sentence <- stringr::str_squish(replace_html_internal(sentences_all$sentence, FALSE))
 
   # Remove duplicates
   sentences_all <- unique(sentences_all)
